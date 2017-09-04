@@ -1,0 +1,43 @@
+{
+  "name": "mis-tianjiyuan",
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "TianJiYuan Property co., ltd management information service website.",
+  "main": "main.js",
+  "scripts": {
+    "start": "npm run build:dev && npm run dev",
+    "build:dev": "npm run copyStatic && env=dev webpack --progress --profile --colors",
+    "dev": "env=dev webpack-dev-server -p --inline --hot",
+    "build:prod": "npm run copyStatic && env=prod webpack --progress --profile --colors",
+    "prod": "env=prod webpack-dev-server -p --inline --hot",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "copyStatic": "rm -rf dist && cp -r public dist",
+    "lint": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruoru/mis-tianjiyuan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ruoru/mis-tianjiyuan/issues"
+  },
+  "homepage": "https://github.com/ruoru/mis-tianjiyuan#readme",
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^3.5.5",
+    "webpack-dev-server": "^2.7.1"
+  }
+}
