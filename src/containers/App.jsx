@@ -34,7 +34,7 @@ class App extends Component {
 App.propTypes = {
   visibleTodos: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired
+    completed: PropTypes.bool.isRequired,
   }).isRequired).isRequired,
   visibilityFilter: PropTypes.oneOf([
     'SHOW_ALL',

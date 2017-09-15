@@ -1,5 +1,5 @@
 const { join } = require('path');
-const webpack = require('webpack')
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const environment = require('./config/environment')[process.env.env];
 const version = require('./package').version;
@@ -15,10 +15,10 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.json'],
     },
-    // externals: {
-    //     'react': 'React',
-    //     'react-dom': 'ReactDOM',
-    // },
+    externals: {
+        'react': 'React',
+        'react-dom': 'ReactDOM',
+    },
     module: {
         loaders: [
             //处理jsx文件
@@ -103,7 +103,7 @@ module.exports = {
         contentBase: join(__dirname, './dist'),
         compress: true,    //启用所有服务的gzip压缩
         host: 'localhost',
-        port: 8001,
+        port: 8011,
 
         //lazy: true,    //当lazy启用时，当它被请求的DEV-服务器将只编译软件包。这意味着webpack不会看到任何文件更改。我们称这个懒惰模式。
         //filename: '[name].bundle.js',    ///[name].bundle.js请求时才编译 。filename在没有延迟模式的情况下使用时不起作用。
