@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore } from 'redux';
@@ -9,5 +10,5 @@ render(
   <Provider store={ createStore(todoApp) }>
     <App />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

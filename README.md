@@ -10,8 +10,8 @@ TianJiYuan Property co., ltd management information service website.
 │   ├── components           # 全局可复用的表现组件(Presentational Components)
 │   ├── containers           # 全局可复用的容器组件
 │   ├── layouts              # 主页结构
-│   ├── store                # Redux指定块
-│   │   ├── createStore.js   # 创建和使用redux store
+│   ├── store                # Redux 指定块
+│   │   ├── createStore.js   # 创建和使用 redux store
 │   │   └── reducers.js      # Reducer注册和注入
 │   └── routes               # 主路由和异步分割点
 │       ├── index.js         # 用store启动主程序路由
