@@ -1,15 +1,15 @@
 const { join } = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const environment = require('./config/environment')[process.env.env];
-const version = require('./package').version;
+const environment = require('../config/environment')[process.env.env];
+const version = require('../package').version;
 
 module.exports = {
   entry: {
     app: './src/main.js',
   },
   output: {
-    path: join(__dirname, './dist'),
+    path: join(__dirname, '../dist'),
     filename: `[name]-v${version}.js`,
   },
   resolve: {
@@ -101,7 +101,7 @@ module.exports = {
     open: true,
     inline: true,
     publicPath: '/',
-    contentBase: join(__dirname, './dist'),
+    contentBase: join(__dirname, '../dist'),
     compress: true,    //启用所有服务的gzip压缩
     host: 'localhost',
     port: 8011,

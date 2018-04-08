@@ -5,10 +5,10 @@
   "main": "main.js",
   "scripts": {
     "start": "npm run build:dev && npm run dev",
-    "build:dev": "npm run copyFiles && env=dev webpack --progress --profile --colors",
-    "dev": "env=dev webpack-dev-server --hot --inline",
-    "build:prod": "npm run copyFiles && env=prod webpack --progress --profile --colors",
-    "prod": "env=prod webpack-dev-server --hot --inline",
+    "build:dev": "npm run copyFiles && env=dev webpack --config ./build/webpack.config.js --progress --profile --colors",
+    "dev": "env=dev webpack-dev-server --config ./build/webpack.config.js --https --hot --inline",
+    "build:prod": "npm run copyFiles && env=prod webpack --config ./build/webpack.config.js --progress --profile --colors",
+    "prod": "env=prod webpack-dev-server --config ./build/webpack.config.js --https --hot --inline",
     "copyFiles": "rm -rf dist && cp -r public dist",
     "lint": "standard",
     "test": "echo \"Error: no test specified\" && exit 1"
