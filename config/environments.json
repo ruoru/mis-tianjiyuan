@@ -1,26 +1,30 @@
 {
   "dev": {
+    "key": "dev",
     "name": "development",
-    "NODE_ENV": "dev",
+    "NODE_ENV": "development",
     "title": "开发环境",
     "mixpanelToken": ""
   },
   "test": {
+    "key": "test",
     "name": "testing",
-    "NODE_ENV": "test",
+    "NODE_ENV": "testing",
     "title": "测试环境",
     "mixpanelToken": ""
   },
   "staging": {
+    "key": "staging",
     "name": "staging",
     "NODE_ENV": "staging",
-    "title": "部署环境",
+    "title": "演示环境",
     "mixpanelToken": ""
   },
   "prod": {
+    "key": "prod",
     "name": "production",
-    "NODE_ENV": "prod",
-    "title": "天基源物业管理有限公司",
+    "NODE_ENV": "production",
+    "title": "生产环境",
     "mixpanelToken": ""
   }
 }
