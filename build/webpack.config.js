@@ -86,14 +86,14 @@ module.exports = env => {
         filename: 'index.html',
         inject: false,    // 打包之后js放置在那里 body header false不引入打包后的js
         chunks: ['main'],
-        title: `${environment.title}`,
+        title: JSON.stringify(`${environment.title}`),
         publicURL: '//assert.ruoru.me',
       }),
 
       new webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': `${environment.name}`,
-          'GATEWAY_ENV': `${environment.name}`,
+          'NODE_ENV': JSON.stringify(`${environment.name}`),
+          'GATEWAY_ENV': JSON.stringify(`${environment.name}`),
         },
       }),
 
