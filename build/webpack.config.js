@@ -6,6 +6,7 @@ const version = require('../package').version;
 
 module.exports = env => {
   const environment = environments[(env && env.env) || process.env.env || 'prod'];
+  console.log(1111111111111, env && env.env, process.env.env)
   return {
     entry: {
       main: './src/main.js',
