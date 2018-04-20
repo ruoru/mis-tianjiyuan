@@ -1,6 +1,8 @@
 # mis-tianjiyuan
 TianJiYuan Property co., ltd management information service website.
 
+## 蓝图
+use webpack react redux router graphQL HTTP2 Jest in this project.
 
 ## 项目结构
 
