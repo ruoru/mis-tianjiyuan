@@ -4,13 +4,16 @@
   "description": "TianJiYuan Property co., ltd management information service website.",
   "main": "main.js",
   "scripts": {
+    // "start": "sh ./script/start-windows.sh",
     "start": "npm run build:dev && npm run dev",
+    "build:local": "npm run copyFiles && webpack --config ./build/webpack.config.js --env.env=local --progress --profile --colors",
+    "local": "webpack-dev-server --config ./build/webpack.config.js --env.env=local",
     "build:dev": "npm run copyFiles && webpack --config ./build/webpack.config.js --env.env=dev --progress --profile --colors",
     "dev": "webpack-dev-server --config ./build/webpack.config.js --env.env=dev",
     "build:prod": "npm run copyFiles && webpack --config ./build/webpack.config.js --env.env=prod --progress --profile --colors",
     "prod": "webpack-dev-server --config ./build/webpack.config.js --env.env=prod",
     "copyFiles": "rm -rf dist && cp -r public dist",
-    "windows": "npm run copyFilesInWindows && webpack --config ./build/webpack.config.js --env.env=prod --progress --profile --colors && webpack-dev-server --config ./build/webpack.config.js --env.env=prod",
+    "windows:prod": "npm run copyFilesInWindows && webpack --config ./build/webpack.config.js --env.env=prod --progress --profile --colors && webpack-dev-server --config ./build/webpack.config.js --env.env=prod",
     "copyFilesInWindows": "rmdir /s/q dist && mkdir dist &&  xcopy public dist /s/q/f/h",
     "lint": "standard",
     "test": "echo \"Error: no test specified\" && exit 1"

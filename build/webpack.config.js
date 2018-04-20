@@ -6,7 +6,7 @@ const version = require('../package').version;
 
 module.exports = env => {
   const environment = environments[(env && env.env) || 'prod'];
-  console.log(1111111111111, env && env.env)
+
   return {
     entry: {
       main: './src/main.js',
@@ -86,14 +86,14 @@ module.exports = env => {
         filename: 'index.html',
         inject: false,    // 打包之后js放置在那里 body header false不引入打包后的js
         chunks: ['main'],
-        title: JSON.stringify(`${environment.title}`),
+        title: `${environment.title}`,
         publicURL: '//assert.ruoru.me',
       }),
 
       new webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': JSON.stringify(`${environment.name}`),
-          'GATEWAY_ENV': JSON.stringify(`${environment.name}`),
+          'NODE_ENV': JSON.stringify(`${environment.key}`),
+          'GATEWAY_ENV': JSON.stringify(`${environment.key}`),
         },
       }),
 
