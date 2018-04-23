@@ -9,3 +9,4 @@ case $env in
 esac
 
 
+## "start": "sh ./script/start-windows.sh",
