@@ -1,16 +1,20 @@
-import { combineReducers } from 'redux'
-import locationReducer from './location'
+import { combineReducers } from 'redux';
 
-export const makeRootReducer = (asyncReducers) => {
-  return combineReducers({
-    location: locationReducer,
-    ...asyncReducers
-  })
-}
+import { navToggle } from '../layouts/SideLayout/modules/SideLayoutModule';
 
-export const injectReducer = (store, { key, reducer }) => {
-  store.asyncReducers[key] = reducer
-  store.replaceReducer(makeRootReducer(store.asyncReducers))
-}
+// export const rootReducer = (asyncReducers) => {
+//   return combineReducers({
+//     //...asyncReducers
+//   })
+// }
 
-export default makeRootReducer
+// export const injectReducer = (store, { key, reducer }) => {
+//   store.asyncReducers[key] = reducer
+//   store.replaceReducer(rootReducer(store.asyncReducers))
+// }
+
+const rootReducer = combineReducers({
+  navToggle,
+});
+
+export default rootReducer;

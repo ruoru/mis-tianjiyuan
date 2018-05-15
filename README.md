@@ -1,9 +1,6 @@
 # mis-tianjiyuan
 TianJiYuan Property co., ltd management information service website.
 
-## Plan
-use webpack react redux router graphQL HTTP2 Jest in this project.
-
 ## Begin development
 
 ### 开发环境
@@ -59,7 +56,9 @@ mkdir dist
 
 ## 项目结构
 
+参考
 [react-starter-kit](https://github.com/bodyno/react-starter-kit.git)
+
 ```
 .
 ├── bin                      # 启动脚本
@@ -89,5 +88,10 @@ mkdir dist
 │           ├── container    # 连接actions和store
 │           ├── modules      # reducers/constants/actions的集合
 │           └── routes **    # 不规则子路由(** 可选择的)
-└── tests                    # 单元测试
+├── tests                    # 单元测试
+├── .babelrc                 # Babel 转码配置
+├── .eslintignore            # （配置）ESLint 检查中需忽略的文件（夹）
+├── .eslintrc                # ESLint 配置
+├── .gitignore               # （配置）需被 Git 忽略的文件（夹）
+└── package.json             # （这个就不用多解释了吧）
 ```

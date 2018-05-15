@@ -1,14 +1,17 @@
 import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import store from './store/createStore';
+
 import App from './containers/App';
-import todoApp from './reducers';
 
 render(
-  <Provider store={ createStore(todoApp) }>
-    <App />
+  <Provider store={ store }>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root'),
 );

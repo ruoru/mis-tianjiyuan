@@ -44,7 +44,7 @@ module.exports = env => {
           }
         },
         {
-          test: /\.(css|scss)$/,
+          test: /\.(css|scss|less)$/,
           use: [
             {
               loader: 'style-loader',
@@ -52,7 +52,7 @@ module.exports = env => {
             {
               loader: 'css-loader',
               options: {
-                importLoaders: 2,     // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loader. 在css-loader之后，指定几个loader处理import的css
+                importLoaders: 3,     // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loader. 在css-loader之后，指定几个loader处理import的css
               },
             },
             {

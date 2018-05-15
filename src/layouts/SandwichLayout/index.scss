@@ -1,0 +1,26 @@
+#components-layout-demo-fixed-sider .logo { height: 32px; background: #333; border-radius: 6px; margin: 16px;}
+
+.menu-collapsed { width: 100%; color: #fff; line-height: 42px; cursor: pointer; display: block; transition: color .3s;}
+.menu-collapsed:hover { color: #108ee9; background-color: #fff;}
+
+
+.sider {
+  overflow: auto;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+}
+
+.header {
+  background: #fff;
+  padding: 0;
+}
+
+.content{
+  margin: 24px 16px 0;
+  overflow: initial;
+}
+
+.footer {
+  text-align: center;
+}
