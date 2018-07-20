@@ -25,6 +25,7 @@ module.exports = env => {
     externals: {
       'react': 'React',
       'react-dom': 'ReactDOM',
+      'mobx': 'MobX',
     },
 
     module: {
@@ -38,7 +39,8 @@ module.exports = env => {
             options: {
               presets: ['@babel/preset-env', '@babel/react'],
               plugins: [
-                ['import', { libraryName: 'antd', style: 'css' }] // `style: true` 会加载 less 文件
+                'transform-decorators-legacy',
+                ['import', { libraryName: 'antd', style: 'css' }], // `style: true` 会加载 less 文件
               ],
             }
           }
@@ -58,6 +60,12 @@ module.exports = env => {
             {
               loader: "sass-loader"
             },
+            // {
+            //   loader: "less-loader", // compiles Less to CSS
+            //   // options: [
+            //   //   ExtractTextPlugin.extract('css!postcss!less?{modifyVars:{"@primary-color":"#1DA57A"}}'),
+            //   // ]
+            // },
             {
               loader: 'postcss-loader',
               options: {
@@ -81,6 +89,7 @@ module.exports = env => {
     },
 
     plugins: [
+
       new HtmlWebpackPlugin({
         template: './public/index.html',
         filename: 'index.html',
@@ -92,8 +101,9 @@ module.exports = env => {
 
       new webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': JSON.stringify(`${environment.key}`),
-          'GATEWAY_ENV': JSON.stringify(`${environment.key}`),
+          'KEY': JSON.stringify(`${environment.key}`),
+          'NODE_ENV': JSON.stringify(`${environment.NODE_ENV}`),
+          'GATEWAY_ENV': JSON.stringify(`${environment.GATEWAY_ENV}`),
         },
       }),
 

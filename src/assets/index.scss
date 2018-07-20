@@ -1,0 +1,235 @@
+@import "./public.scss";
+
+// public
+body,
+ul,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+img,
+br,
+hr,
+table,
+tr,
+td,
+dl,
+dt,
+dd,
+form {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-family: "Helvetica Neue", "Open Sans", "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei";
+}
+
+.clear {
+  clear: both;
+}
+
+ul, li {
+  list-style: none;
+}
+
+img {
+  border: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+// recover pulic
+#root{
+  min-height: 100%;
+  height: inherit;
+  font-family: "Helvetica Neue", "Open Sans", "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei";
+}
+
+
+// public theme style
+.ant-table-small {
+  border: none;
+
+  .ant-table-content > .ant-table-body > table{
+    .ant-table-thead > tr > th {
+      font-weight: 500;
+    }
+  }
+}
+
+// dark theme style
+.theme-dark {
+  font-weight: 100;
+  color :$color11;
+
+  a {
+    color: $color-main;
+  }
+
+  h3, h4 {
+    color: #fff;
+  }
+
+  .finder .columns .select {
+    background-color: $bg-color3;
+  }
+
+  .ant-input{
+    background-color: $bg-color1;
+    border: 1px solid $color12;
+    color: $color12;
+  }
+  .ant-input-search-icon {
+    color: $color11;
+  }
+
+  .anticon-share-alt:before, .anticon-edit:before, .anticon:before {
+    color: $color-main;
+  }
+
+  .ant-switch-checked {
+    background-color: $color-main;
+  }
+
+  .ant-btn {
+    color: $color11;
+    background-color: $bg-color1;
+    outline:none;
+  }
+
+  .ant-btn:hover, .ant-btn:visited, .ant-btn:focus {
+    color: $color-main;
+    border-color: $color-main;
+    background-color: $bg-color1;
+  }
+
+  .ant-tag, .ant-tag a, .ant-tag a:hover {
+    background-color: $bg-color1;
+  }
+
+  .ant-menu-inline .ant-menu-item {
+    margin-top: 0;
+  }
+
+  .ant-modal-header, .ant-modal-title {
+    color: $color11;
+    background-color: $bg-color2
+  }
+
+  .ant-modal-content, .ant-confirm-body .ant-confirm-title, .ant-confirm-body .ant-confirm-content {
+    color: $color11;
+    background-color: $bg-color2
+  }
+
+  .ant-table-placeholder {
+    background: $bg-color3;
+    color: #aaaaaa;
+  }
+  .ant-table-small {
+    .ant-table-content > .ant-table-body > table{
+      .ant-table-thead > tr > th {
+        background: rgba(0, 0, 0, 0);
+        color: #fff;
+      }
+
+      .ant-table-tbody > tr > td {
+        color: #999;
+        font-weight: 200;
+        a {
+          color: $color-main;
+        }
+        a:hover {
+          color: $color-main;
+        }
+      }
+      .ant-table-tbody > tr.ant-table-row:hover td {
+        background-color: $bg-color3;
+      }
+    }
+  }
+
+  .ant-pagination {
+    .ant-pagination-item {
+      background-color: $bg-color1;
+      border-color: $color11;
+      color: $color11;
+      a {
+        border-color: $color11;
+        color: $color11;
+      }
+    }
+    .ant-pagination-item-active, .ant-pagination-item:hover {
+      color: $color-main;
+      border-color: $color-main;
+      a {
+        color: $color-main;
+        border-color: $color-main;
+      }
+    }
+    .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-disabled a, .ant-pagination-disabled:hover a, .ant-pagination-disabled:focus a, .ant-pagination-disabled .ant-pagination-item-link, .ant-pagination-disabled:hover .ant-pagination-item-link, .ant-pagination-disabled:focus .ant-pagination-item-link {
+      background-color: $bg-color1;
+      border-color: $color11;
+      color: $color11;
+      :hover {
+        color: $color-main;
+        border-color: $color-main;
+      }
+    }
+    .ant-pagination-options-quick-jumper {
+      color: $color11;
+      input {
+        background-color: $bg-color1;
+        border-color: $color11;
+        color: $color11;
+      }
+    }
+    .ant-pagination-jump-prev:after, .ant-pagination-jump-next:after {
+      :hover {
+        color: $color-main;
+      }
+    }
+  }
+
+  .ant-progress-inner {
+    background-color: $bg-color1;
+  }
+  .ant-progress-text {
+    color: $color11;
+  }
+
+  .ant-radio-wrapper {
+    span {
+      color: $color11;
+    }
+  }
+
+  .ant-badge-status-text {
+    color: $color11;
+  }
+
+  .ant-modal-content {
+    background-color: $bg-color2;
+  }
+
+  .ant-select-selection {
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    background-color: $bg-color3;
+  }
+  .ant-select-selection__placeholder, .ant-select-search__field__placeholder {
+    color: #ffffff;
+  }
+  .ant-select-arrow {
+    color: #ffffff;
+  }
+}

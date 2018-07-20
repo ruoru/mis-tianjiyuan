@@ -6,7 +6,7 @@
     "GATEWAY_ENV": "local",
     "title": "本地环境",
     "mixpanelToken": "",
-    "api": "//0.0.0.0:8080"
+    "api": "//0.0.0.0:8000"
   },
   "dev": {
     "key": "dev",
@@ -15,7 +15,7 @@
     "GATEWAY_ENV": "development",
     "title": "开发环境",
     "mixpanelToken": "",
-    "api": "//0.0.0.0:8080"
+    "api": "//0.0.0.0:8000"
   },
   "test": {
     "key": "test",
@@ -24,7 +24,7 @@
     "GATEWAY_ENV": "testing",
     "title": "测试环境",
     "mixpanelToken": "",
-    "api": "//0.0.0.0:8080"
+    "api": "//0.0.0.0:8000"
   },
   "staging": {
     "key": "staging",
@@ -33,7 +33,7 @@
     "GATEWAY_ENV": "staging",
     "title": "演示环境",
     "mixpanelToken": "",
-    "api": "//0.0.0.0:8080"
+    "api": "//0.0.0.0:8000"
   },
   "prod": {
     "key": "prod",
@@ -42,6 +42,6 @@
     "GATEWAY_ENV": "production",
     "title": "生产环境",
     "mixpanelToken": "",
-    "api": "//0.0.0.0:8080"
+    "api": "//0.0.0.0:8000"
   }
 }

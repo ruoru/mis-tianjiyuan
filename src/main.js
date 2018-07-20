@@ -1,17 +1,20 @@
 import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import store from './store/createStore';
-
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import App from './containers/App';
 
+function requireAuth(nextState, replace, next) {
+  // check user here
+  next();
+}
+
 render(
-  <Provider store={ store }>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <BrowserRouter>
+    <Switch>
+      <Route path='/home' component={App}/>
+      <Route path='/' component={App} onEnter={requireAuth}/>
+    </Switch>
+  </BrowserRouter>,
   document.getElementById('root'),
 );
