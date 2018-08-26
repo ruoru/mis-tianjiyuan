@@ -1,43 +1,21 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { Layout } from 'antd';
 
-export default class Footer extends Component {
-  renderFilter(filter, name) {
-    if (filter === this.props.filter) {
-      return name
-    }
-
-    return (
-      <a href='#' onClick={e => {
-        e.preventDefault()
-        this.props.onFilterChange(filter)
-      }}>
-        {name}
-      </a>
-    )
-  }
-
+class Footer extends Component {
   render() {
     return (
-      <p>
-        Show:
-        {' '}
-        {this.renderFilter('SHOW_ALL', 'All')}
-        {', '}
-        {this.renderFilter('SHOW_COMPLETED', 'Completed')}
-        {', '}
-        {this.renderFilter('SHOW_ACTIVE', 'Active')}
-        .
-      </p>
-    )
+      <Layout.Footer className="footer">
+        <p>
+          <span>© , Gowild Digital Co., Ltd. All Rights Reserved.</span>
+          <span>深圳狗尾草智能科技有限公司</span>
+        </p>
+        <p className="case-number">
+          <a href="#">深ICP证00000号</a>
+          <a href="#" className="police">深公网安备00000000000</a>
+        </p>
+      </Layout.Footer>
+    );
   }
 }
 
-Footer.propTypes = {
-  onFilterChange: PropTypes.func.isRequired,
-  filter: PropTypes.oneOf([
-    'SHOW_ALL',
-    'SHOW_COMPLETED',
-    'SHOW_ACTIVE'
-  ]).isRequired
-}
+export default Footer;

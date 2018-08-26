@@ -1,0 +1,89 @@
+.login {
+  background-color: #f0f3f7;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .footer {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.45);
+    .description {
+      > * {
+        margin: 0 20px;
+        color: rgba(0, 0, 0, 0.45);
+      }
+    }
+  }
+}
+
+.login-wrap {
+  width: 360px;
+  height: auto;
+  margin: 100px auto 0;
+
+  .title {
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      img {
+        height: 42px;
+        margin-right: 20px;
+      }
+    }
+
+    .description {
+      p {
+        text-align: center;
+      }
+    }
+  }
+
+  .ant-tabs {
+    margin-top: 40px;
+
+    .form {
+      > div {
+        margin-bottom: 24px;
+      }
+      > div:last-child {
+        margin-bottom: 0;
+      }
+
+      .ant-input-affix-wrapper {
+        height: 40px;
+      }
+
+      .smscode-wrap {
+        display: flex;
+        justify-content: space-between;
+
+        .ant-btn {
+          height: 40px;
+          margin-left: 16px;
+        }
+      }
+    }
+    .input-color {
+      color: rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  .login-help {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+  }
+
+  .other-help {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+  }
+
+  .btn-login {
+    height: 40px;
+    margin-top: 24px;
+  }
+}

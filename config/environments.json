@@ -6,7 +6,7 @@
     "GATEWAY_ENV": "local",
     "title": "本地环境",
     "mixpanelToken": "",
-    "api": "//192.168.6.194:8000"
+    "api": "//0.0.0.0:8080"
   },
   "dev": {
     "key": "dev",
@@ -15,7 +15,7 @@
     "GATEWAY_ENV": "development",
     "title": "开发环境",
     "mixpanelToken": "",
-    "api": "//172.26.1.211:8001"
+    "api": "//0.0.0.0:8080"
   },
   "test": {
     "key": "test",
@@ -24,7 +24,7 @@
     "GATEWAY_ENV": "testing",
     "title": "测试环境",
     "mixpanelToken": "",
-    "api": "//0.0.0.0:8001"
+    "api": "//0.0.0.0:8080"
   },
   "staging": {
     "key": "staging",
