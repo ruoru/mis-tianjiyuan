@@ -1,93 +1,113 @@
-import environments from '../../config/environments';
-const environment = environments[process.env.GATEWAY_ENV];
-
 class Gateway {
   constructor(domains, options) {
     this.domains = domains;
     this.options = options;
-    this.middleware = this.requestMiddleware;
+    this.formRequest = this.formRequest;
+    this.jsonRequest = this.jsonRequest;
   }
 
-  getCookie () {
-    const docCookie = document.cookie, obj = {};
+  async formRequest(method, path, filter = {}, notWithAuth) {
+    method = method.toUpperCase();
+    const url = this.generateRequestURL(method, path, filter);
+    const options = this.generateRequestOptions(method, filter, 'form', notWithAuth);
+    return await this.requestAndResponse(url, options);
+  }
 
-    const arrCookie = docCookie.split(';').forEach(item => {
+  async jsonRequest(method, path, filter = {}, notWithAuth) {
+    method = method.toUpperCase();
+    const url = this.generateRequestURL(method, path, filter);
+    const options = this.generateRequestOptions(method, filter, 'json', notWithAuth);
+    return await this.requestAndResponse(url, options);
+  }
+
+  getAuthInfo() {
+    const docCookie = document.cookie,
+      obj = {
+        jwToken: localStorage.getItem('jwToken')
+      };
+
+    docCookie.split(';').forEach(item => {
       const arrItem = item.split('=');
-      if(arrItem[0]) {
+      if (arrItem[0]) {
         obj[arrItem[0]] = arrItem[1];
       }
-    })
+    });
 
     return obj;
   }
 
-  generateRequestURL(method = 'GET', path = '/', filter = {}) {
-    if (path.indexOf('//') !== 0 && path.indexOf('http://') !== 0 && path.indexOf('https://') !== 0) {
-      path = `${this.domains.api}${path}`;
-    }
-    if(method === 'GET') {
-      let query = '', whereFilter = filter.where;
-      for (let key in whereFilter) {
-        query += `&${key}=${whereFilter[key]}`;
-      }
-      query = query.substring(1);
-      if(query) {
-        path = path.indexOf('?') === -1 ? `${path}?${query}` : `${path}&${query}`;
-      }
-    }
-    return path;
-  }
-
-  generateRequestOptions(method = 'GET', filter = {}) {
-    const { csrftoken } = this.getCookie();
+  generateRequestOptions(method = 'GET', filter = {}, requestDataType, notWithAuth) {
     const options = {
       method,
-      credentials: 'include',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-        // 'x-csrftoken': localStorage.getItem('tokenId'),
       },
       mode: 'cors',
     };
 
+    if (!notWithAuth) {
+      const { jwToken } = this.getAuthInfo();
+      // personal jwt
+      if (!jwToken) {
+        this.onFailAuth('no jwToken');
+        return;
+      }
+      // options.credentials = 'include';
+      options.headers['Authorization'] = jwToken;
+    }
+
     if (method === 'GET') {
-      //delete options.headers['x-csrftoken'];
+      delete options.headers['Content-Type'];
     } else if (method === 'HEAD') {
-      
     } else {
-      if (window.File && filter instanceof window.File) {
-        options.body = filter;
+      const filterData = Object.assign({}, filter.data);
+
+      if (requestDataType === 'form') {
         delete options.headers['Content-Type'];
-      } else {
-        options.body = JSON.stringify(Object.assign({}, filter.data, filter.where));
+        let formData = new FormData();
+        for (const key in filterData) {
+          formData.append(key, filterData[key]);
+        }
+        options.body = formData;
+      } else if (requestDataType === 'json') {
+        options.body = JSON.stringify(filterData);
       }
     }
 
     return options;
   }
 
-  async requestAndResponse(fetchURL, fetchOptions) {
-    
-    const response = await fetch(fetchURL, fetchOptions);
-    const status = response.status;
-
-    //delete option
-    if(fetchOptions.method === 'DELETE') {
-      const body = response.text();
-      if(status < 400) {
-        return body;
-      } else {
-        throw new Error(body.error.message); 
+  generateRequestURL(method = 'GET', path = '/', filter = {}) {
+    if (path.indexOf('//') !== 0 && path.indexOf('http://') !== 0 && path.indexOf('https://') !== 0) {
+      path = `${this.domains.api}${path}`;
+    }
+    if (method === 'GET') {
+      let query = '',
+        whereFilter = filter.where;
+      for (let key in whereFilter) {
+        query += `&${key}=${whereFilter[key]}`;
+      }
+      query = query.substring(1);
+      if (query) {
+        path = path.indexOf('?') === -1 ? `${path}?${query}` : `${path}&${query}`;
       }
     }
+    return path;
+  }
 
+  async requestAndResponse(fetchURL, fetchOptions) {
+    const response = await fetch(fetchURL, fetchOptions);
+
+    const status = response.status;
     const body = await response.json();
 
-    if ([401, 403].indexOf(status) !== -1) {
-      this.onAuthFail(body);
-    } else if (!response || response.status >= 400) {
-      let error = new Error(body.error.message);
+    if (status === 401) {
+      this.onFailAuth(body);
+    } else if (status === 403) {
+      this.onNoAuth(body);
+    } else if (!response || status >= 400) {
+      let error = new Error(body);
       error.status = status;
       throw error;
     }
@@ -95,22 +115,23 @@ class Gateway {
     return body;
   }
 
-  async requestMiddleware(method, path, filter = {}) {
-    method = method.toUpperCase();
-    const url = this.generateRequestURL(method, path, filter);
-    const options = this.generateRequestOptions(method, filter);
-    return await this.requestAndResponse(url, options);
-  }
-
-  onAuthFail(responseBody) {
+  onFailAuth(responseBody) {
     const error = Object.assign(new Error(), responseBody);
-    if (typeof this.options.onAuthFail === 'function') {
-      this.options.onAuthFail(error);
+    if (typeof this.options.onUnauthorized === 'function') {
+      this.options.onUnauthorized(error);
     } else {
       throw new Error(error);
     }
   }
 
+  onNoAuth(responseBody) {
+    const error = Object.assign(new Error(), responseBody);
+    if (typeof this.options.onForbidden === 'function') {
+      this.options.onForbidden(error);
+    } else {
+      throw new Error(error);
+    }
+  }
 }
 
 export default Gateway;

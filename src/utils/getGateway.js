@@ -1,22 +1,28 @@
-import environments from '../../config/environments';
-import Gateway from './Gateway';
+import environments from "../../config/environments";
+import Gateway from "./Gateway";
 
 var cachedGateway = null;
 
-function getGateway(options) {
+function gateway() {
   const environment = environments[process.env.GATEWAY_ENV];
   if (!cachedGateway) {
-    cachedGateway = new Gateway({
-      api: environment.api,
-    }, {
-      onAuthFail: error => {
-        localStorage.clear();
-        document.cookie = null;
-        location.href = `http://sso.gowild.top/login/?redirectURL=http:${environment.api}&&authURL=http:${environment.api}/sso_auth/`;
+    cachedGateway = new Gateway(
+      {
+        api: environment.api
+      },
+      {
+        onUnauthorized: error => {
+          localStorage.clear();
+          document.cookie = null;
+          location.href = `/login`;
+        },
+        onForbidden: error => {
+
+        }
       }
-    });
+    );
   }
   return cachedGateway;
 }
 
-export default getGateway();
+export default gateway();

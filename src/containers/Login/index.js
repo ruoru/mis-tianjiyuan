@@ -1,59 +1,101 @@
-import "./index.scss";
-import React, { Component } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
-import { message, Tabs, Input, Icon, Checkbox, Button } from "antd";
-import Nav from "../../components/Nav";
-import getGateway from "../../utils/getGateway";
+import './index.scss';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { message, Alert, Tabs, Input, Icon, Checkbox, Button } from 'antd';
+import Nav from '../../components/Nav';
+import gateway from '../../utils/getGateway';
+import environments from '../../../config/environments';
+const environment = environments[process.env.NODE_ENV];
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      loginType: "account",
-      account: "",
-      password: "",
-      phone: "",
-      smscode: ""
+      loginType: 'account',
+      account: '',
+      password: '',
+      phone: '',
+      smscode: '',
+      isLoginFail: false,
+      isLoging: false,
+      nextSmscodeSeconds: -1,
     };
 
     this.onLogin = this.onLogin.bind(this);
+    this.getSMSCode = this.getSMSCode.bind(this);
+  }
+
+  componentDidMount() {
+    this.renderSMSCodeSeconds = (seconds) => {
+      if (seconds > 0) {
+        setTimeout(() => {
+          this.setState({ nextSmscodeSeconds: seconds - 1 });
+          this.renderSMSCodeSeconds(seconds - 1);
+        }, 1000);
+      } else {
+        this.setState({ nextSmscodeSeconds: -1 });
+      }
+    }
+  }
+
+  async getSMSCode() {
+    const { phone, smscode } = this.state;
+    try {
+      const response = await gateway.formRequest('GET', ``, {}, true);
+
+      this.setState({ nextSmscodeSeconds: 60 });
+      this.renderSMSCodeSeconds(10);
+    } catch (error) {
+      message.error(`发送失败，请刷新后重试。`)
+    }
   }
 
   async onLogin() {
+    const { history } = this.props;
     const { loginType, account, password, phone, smscode } = this.state;
 
-    let status = false;
+    this.setState({ isLoginFail: false, isLoging: true });
+
     try {
-      if (loginType === "account") {
-        await getGateway.middleware('POST', `/asd/asd`, {
+      let response = {};
+
+      if (loginType === 'account') {
+        response = await gateway.formRequest('POST', `/datamanage/manage/login`, {
           data: {
-            account,
+            userName: account,
             password,
           }
-        })
+        }, true);
       } else {
-        await getGateway.middleware('POST', `/asd/asd`, {
+        response = await gateway.formRequest('POST', `/datamanage/manage/smslogin`, {
           data: {
             phone,
             smscode,
           }
-        })
+        }, true);
       }
 
-      if(status) {
-        location.push(`/`);
+      if (response.data) {
+        localStorage.setItem('jwToken', response.data);
+        const userInfo = (await gateway.formRequest('GET', `/datamanage/manage/index/userInfo`)).data;
+        localStorage.setItem('userName', userInfo.maName);
+        localStorage.setItem('userAvatar', userInfo.maAvatar);
+
+        history.push(`/`);
       } else {
-        message.error('账号或密码不匹配');
+        this.setState({ isLoginFail: true });
       }
     } catch (error) {
-      message.error('网络异常');
+      message.error("网络异常");
     }
+
+    this.setState({ isLoging: false });
   }
 
   render() {
-    const { loginType, account, password, phone, smscode } = this.state;
+    const { loginType, account, password, phone, smscode, isLoginFail, nextSmscodeSeconds, isLoging } = this.state;
 
     return (
       <div className="login">
@@ -74,6 +116,9 @@ class Login extends Component {
           >
             <Tabs.TabPane key="account" tab="账号密码登录" className="form">
               <div>
+                {isLoginFail ? <Alert message="账号与密码不匹配" type="error" /> : ''}
+              </div>
+              <div>
                 <Input
                   value={account}
                   placeholder="账 号"
@@ -83,6 +128,7 @@ class Login extends Component {
               </div>
               <div>
                 <Input
+                  type="password"
                   value={password}
                   placeholder="密 码"
                   prefix={<Icon type="lock" className="input-color" />}
@@ -91,6 +137,9 @@ class Login extends Component {
               </div>
             </Tabs.TabPane>
             <Tabs.TabPane key="phone" tab="手机验证码登录" className="form">
+              <div>
+                {isLoginFail ? <Alert message="账号与密码不匹配" type="error" /> : ''}
+              </div>
               <div>
                 <Input
                   value={phone}
@@ -106,7 +155,12 @@ class Login extends Component {
                   prefix={<Icon type="mail" className="input-color" />}
                   onChange={e => this.setState({ smscode: e.target.value })}
                 />
-                <Button>获取验证码</Button>
+                <Button
+                  onClick={this.getSMSCode}
+                  disabled={nextSmscodeSeconds > 0}
+                >
+                  {nextSmscodeSeconds > 0 ? `${nextSmscodeSeconds} s` : '获取验证码'}
+                </Button>
               </div>
             </Tabs.TabPane>
           </Tabs>
@@ -121,7 +175,12 @@ class Login extends Component {
           </div>
 
           <div className="">
-            <Button type="primary" className="w100p btn-login" onClick={this.onLogin}>
+            <Button
+              type="primary"
+              className="w100p btn-login"
+              loading={isLoging}
+              onClick={this.onLogin}
+            >
               登 录
             </Button>
           </div>
@@ -129,6 +188,11 @@ class Login extends Component {
           <div className="other-help">
             <div>
               <span>其他登录方式</span>
+              <div className="login-type">
+                <Icon type="wechat" theme="outlined" />
+                <Icon type="qq" theme="outlined" />
+                <Icon type="weibo" theme="outlined" />
+              </div>
             </div>
             <div>
               <a>注册账户</a>
@@ -160,4 +224,4 @@ Login.propTypes = {
   toggle: PropTypes.func.isRequired
 };
 
-export default Login;
+export default withRouter(Login);

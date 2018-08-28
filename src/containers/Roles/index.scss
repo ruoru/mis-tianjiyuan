@@ -1,6 +1,6 @@
-@import "../../assets/public.scss";
+@import "../../assets/index.scss";
 
-.users {
+.roles {
   .content-center {
     display: block;
     padding: 20px;
@@ -20,10 +20,7 @@
   }
 }
 
-.users-info-edit {
-  .minw120 {
-    min-width: 120px;
-  }
+.roles-info-edit {
   li {
     display: flex;
     margin-top: 16px;

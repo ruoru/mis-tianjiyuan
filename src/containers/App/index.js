@@ -1,13 +1,15 @@
-import "./index.scss";
-import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
-import PropTypes from "prop-types";
-import { Layout, Icon } from "antd";
-import Nav from "../../components/Nav";
+import './index.scss';
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Layout, Icon } from 'antd';
+import Nav from '../../components/Nav';
+import Navigation from '../../components/Navigation';
 
 import Users from '../Users';
+import Roles from '../Roles';
 
-import getGateway from '../../utils/getGateway';
+import gateway from '../../utils/getGateway';
 import navigations from '../../../config/navigations.json';
 
 class App extends Component {
@@ -21,15 +23,16 @@ class App extends Component {
     };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.getAuths();
   }
 
-  async getAuths () {
+  async getAuths() {
     let resp = [];
     try {
-      resp = await getGateway.middleware('GET', '/menu/?format=json', {});
-      if(resp.location) {
+      resp = await gateway.formRequest('GET', '/datamanage/manage/sys/menu/list');
+
+      if (resp.location) {
         location.href = resp.location;
       }
     } catch (error) {
@@ -37,16 +40,16 @@ class App extends Component {
     }
 
     const myNavigationsTitle = resp.map(item => item.title);
-    //this.setState({myNavigations: getMyNavigations(navigations)});
+    // this.setState({ myNavigations: getMyNavigations(navigations) });
     this.setState({myNavigations: navigations});
 
-    function getMyNavigations (allNavigations) {
+    function getMyNavigations(allNavigations) {
       const myNavigations = [];
-      for(let i in allNavigations) {
+      for (let i in allNavigations) {
         const item = allNavigations[i];
-        if(item.children) {
+        if (item.children) {
           item.children = getMyNavigations(item.children);
-          if(item.children.length > 0) {
+          if (item.children.length > 0) {
             myNavigations.push(item)
           }
         } else if (myNavigationsTitle.includes(item.name)) {
@@ -66,19 +69,23 @@ class App extends Component {
           className="layout-sider"
           collapsed={collapsed}
         >
-          <div className="logo" />
-          <Icon
-            className="trigger menu-collapsed"
-            type={collapsed ? "menu-unfold" : "menu-fold"}
-            onClick={e => this.setState({ collapsed: !collapsed })}
-          />
-
-          <Nav />
+          <div className="logo-wrap">
+            <div className="logo" />
+            <Icon
+              className="trigger menu-collapsed"
+              type={collapsed ? 'menu-unfold' : 'menu-fold'}
+              onClick={e => this.setState({ collapsed: !collapsed })}
+            />
+          </div>
+          {/* <Nav /> */}
+          <Navigation data={navigations} />
         </Layout.Sider>
-        <Layout style={{ marginLeft: `${collapsed ? 64 : 200}px` }}>
+        <Layout style={{ marginLeft: `${collapsed ? 80 : 200}px` }}>
           <Switch>
-            <Route path="/users/:id" component={Users}/>
-            <Route path="/users" component={Users}/>
+            <Route path="/users/:id" component={Users} />
+            <Route path="/users" component={Users} />
+            <Route path="/roles/:id" component={Roles} />
+            <Route path="/roles" component={Roles} />
           </Switch>
         </Layout>
       </Layout>

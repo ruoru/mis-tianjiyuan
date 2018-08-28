@@ -1,3 +1,7 @@
+.app {
+  height: 100%;
+}
+
 #components-layout-demo-fixed-sider .logo {
   height: 32px;
   background: #333;
@@ -5,18 +9,26 @@
   margin: 16px;
 }
 
-.menu-collapsed {
+.logo-wrap {
   width: 100%;
-  color: #fff;
-  line-height: 42px;
+  height: 32px;
+  line-height: 32px;
+  display: flex;
+  justify-content: space-between;
   cursor: pointer;
-  display: block;
-  transition: color 0.3s;
+
+  .menu-collapsed {
+    margin: 9px 9px 0 0;
+    color: #fff;
+    display: block;
+    transition: color 0.3s;
+  }
 }
-.menu-collapsed:hover {
-  color: #108ee9;
-  background-color: #fff;
+
+.logo-wrap:hover {
+  background-color: rgba(0, 21, 41, 0.6);
 }
+
 
 .layout-sider {
   overflow: auto;
@@ -24,3 +36,6 @@
   position: fixed;
   left: 0;
 }
+
+
+.w100p {width: 100%;}

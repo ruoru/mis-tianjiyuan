@@ -49,12 +49,12 @@
       {
         "key": "roles",
         "name": "用户角色",
-        "path": "/manageuser/roles"
+        "path": "/roles"
       },
       {
         "key": "users",
         "name": "用户列表",
-        "path": "/manageuser/users"
+        "path": "/users"
       }
     ]
   },
