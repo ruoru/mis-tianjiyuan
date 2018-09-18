@@ -9,7 +9,6 @@ import { LocaleProvider } from 'antd';
 
 import App from "./containers/App/index";
 import Login from "./containers/Login";
-import LoginPro from "./containers/LoginPro";
 
 function requireAuth(nextState, replace, next) {
   // check user here
@@ -21,7 +20,6 @@ render(
     <BrowserRouter>
       <Switch>
         <Route path="/login" component={Login} />
-        <Route path="/loginpro" component={LoginPro} />
         <Route path="/" component={App} onEnter={requireAuth} />
       </Switch>
     </BrowserRouter>
