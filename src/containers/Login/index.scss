@@ -27,6 +27,8 @@
     .logo-wrap {
       display: flex;
       justify-content: center;
+      height: auto;
+      line-height: inherit;
       img {
         height: 42px;
         margin-right: 20px;
@@ -34,6 +36,7 @@
     }
 
     .description {
+      margin-top: 1rem;
       p {
         text-align: center;
       }

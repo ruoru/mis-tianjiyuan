@@ -102,10 +102,10 @@ class Login extends Component {
           <div className="title">
             <div className="logo-wrap">
               <img src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-              <h1>Ant Design Pro</h1>
+              <h1>YOM 关联数据</h1>
             </div>
             <div className="description">
-              <p>Ant Design Pro 是东半球最具影响力的 Web 设计规范</p>
+              <p>这里也许需要一些描述。</p>
             </div>
           </div>
 
@@ -207,7 +207,7 @@ class Login extends Component {
           </div>
           <div>
             <p>
-              TianJiYuan&nbsp;
+              YOM&nbsp;
               <Icon type="copyright" />
               &nbsp;2017
             </p>
