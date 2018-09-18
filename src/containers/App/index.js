@@ -41,7 +41,7 @@ class App extends Component {
 
     const myNavigationsTitle = resp.map(item => item.title);
     // this.setState({ myNavigations: getMyNavigations(navigations) });
-    this.setState({myNavigations: navigations});
+    this.setState({ myNavigations: navigations });
 
     function getMyNavigations(allNavigations) {
       const myNavigations = [];
@@ -69,12 +69,11 @@ class App extends Component {
           className="layout-sider"
           collapsed={collapsed}
         >
-          <div className="logo-wrap">
+          <div className="logo-wrap" onClick={e => this.setState({ collapsed: !collapsed })}>
             <div className="logo" />
             <Icon
               className="trigger menu-collapsed"
               type={collapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={e => this.setState({ collapsed: !collapsed })}
             />
           </div>
           {/* <Nav /> */}

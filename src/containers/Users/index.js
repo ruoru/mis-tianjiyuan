@@ -9,7 +9,6 @@ import {
   Modal,
   Input,
   Select,
-  Switch
 } from "antd";
 import Header from "../../components/Header";
 import gateway from "../../utils/getGateway";

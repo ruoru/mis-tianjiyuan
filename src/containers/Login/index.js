@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { message, Alert, Tabs, Input, Icon, Checkbox, Button } from 'antd';
-import Nav from '../../components/Nav';
 import gateway from '../../utils/getGateway';
 import environments from '../../../config/environments';
 const environment = environments[process.env.NODE_ENV];
