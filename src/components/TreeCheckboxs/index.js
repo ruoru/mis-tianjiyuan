@@ -2,6 +2,7 @@ import "./index.scss";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Checkbox } from "antd";
+import { filter } from 'lodash';
 
 class TreeCheckboxs extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class TreeCheckboxs extends Component {
   onChange(value) {
     const { onChange } = this.props;
     if (typeof onChange === 'function') {
-      onChange(value)
+      onChange(filter(value, Number.isNumber));
     }
   }
 
@@ -26,7 +27,7 @@ class TreeCheckboxs extends Component {
     const checkboxTree = [];
     for (let item of data) {
       if (Array.isArray(item[dataMap.children])) {
-        const arr = this.renderCheckboxTree(item[dataMap.children], dataMap, offset + 1);
+        const arr = this.renderCheckboxTree(item[dataMap.children], dataMap, offset + 2);
         if (arr.length > 0) {
           checkboxTree.push(<>
             <Row gutter={gutter}>
@@ -49,9 +50,9 @@ class TreeCheckboxs extends Component {
   }
 
   render() {
-    const { values, data, dataMap } = this.props;
+    const { value, data, dataMap } = this.props;
     return (
-      <Checkbox.Group style={{ width: "100%" }} value={values} onChange={this.onChange}>
+      <Checkbox.Group style={{ width: "100%" }} value={value} onChange={this.onChange}>
         {this.renderCheckboxTree(data, dataMap)}
       </Checkbox.Group>
     );
@@ -59,14 +60,14 @@ class TreeCheckboxs extends Component {
 }
 
 TreeCheckboxs.propTypes = {
-  values: PropTypes.array,
+  value: PropTypes.array,
   data: PropTypes.array.isRequired,
   dataMap: PropTypes.object,
   onChange: PropTypes.func
 };
 
 TreeCheckboxs.defaultProps = {
-  values: [],
+  value: [],
   data: [],
   dataMap: {
     value: "value",

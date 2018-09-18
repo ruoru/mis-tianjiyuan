@@ -16,7 +16,6 @@ import Header from "../../components/Header";
 import TreeCheckboxs from "../../components/TreeCheckboxs";
 import gateway from "../../utils/getGateway";
 
-
 class Roles extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +48,7 @@ class Roles extends Component {
           render: item => (
             <a
               href="javascript:;"
-              onClick={e => this.setState({ visible: true, info: { name: item.name, authIds: [1, 2, 3, 4, 5, 6] }, })}
+              onClick={e => this.setState({ visible: true, info: { id: item.roId, name: item.name, authIds: item.authIds }, })}
             >
               编辑
             </a>
@@ -113,6 +112,7 @@ class Roles extends Component {
         item.key = item.roId;
         item.id = item.roId;
         item.name = item.roName;
+        item.authIds = item.menuIds.split(',').map(item => parseInt(item));
         return item;
       });
     } catch (error) {
@@ -137,27 +137,46 @@ class Roles extends Component {
 
   async handleOk(itemInfo) {
     this.setState({ confirmLoading: true });
-    return;
+
+    itemInfo.roName = itemInfo.name;
+
+    if (!itemInfo.roName) {
+      message.warning(`名称不得为空`);
+      return;
+    }
+
     try {
       if (itemInfo.id) {
-        itemInfo.meId = itemInfo.id;
+        itemInfo.roId = itemInfo.id;
         const resp = await gateway.formRequest(
           "POST",
-          `/datamanage/manage/sys/master/modify`,
+          `/datamanage/manage/sys/role/modify`,
           {
             data: itemInfo
           }
         );
       } else {
-        itemInfo.maState = true;
         const resp = await gateway.formRequest(
           "POST",
-          `/datamanage/manage/sys/master/add`,
+          `/datamanage/manage/sys/role/add`,
           {
             data: itemInfo
           }
         );
+        itemInfo.id = resp.data;
       }
+
+      const respAuths = await gateway.formRequest(
+        "POST",
+        `/datamanage/manage/sys/authority/saveAuth`,
+        {
+          data: {
+            roId: itemInfo.id,
+            menuIds: itemInfo.authIds.join(','),
+          }
+        }
+      );
+
       this.setState({ visible: false });
     } catch (error) {
       message.error(`提交失败`);
@@ -228,7 +247,6 @@ class Roles extends Component {
               />
             </div>
 
-
             <Drawer
               title="权限管理"
               width={400}
@@ -262,7 +280,7 @@ class Roles extends Component {
                   <Col span={24}>
                     <Form.Item label="权限列表">
                       <TreeCheckboxs
-                        values={info.authIds}
+                        value={info.authIds}
                         data={authOptions}
                         dataMap={{ text: 'meName', value: 'meId', children: 'nodes' }}
                         onChange={value => {
