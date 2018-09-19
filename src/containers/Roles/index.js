@@ -314,7 +314,7 @@ class Roles extends Component {
                 >
                   取消
                 </Button>
-                <Button onClick={e => this.handleOk(info)} type="primary">确定</Button>
+                <Button loading={confirmLoading} onClick={e => this.handleOk(info)} type="primary">确定</Button>
               </div>
             </Drawer>
 
