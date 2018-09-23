@@ -24,9 +24,9 @@
     "path": "/datacenter",
     "children": [
       {
-        "key": "importations",
-        "name": "数据导入",
-        "path": "/datacenter/importations"
+        "key": "dataset",
+        "name": "数据集管理",
+        "path": "/datacenter/dataset"
       },
       {
         "key": "reviewtasks",

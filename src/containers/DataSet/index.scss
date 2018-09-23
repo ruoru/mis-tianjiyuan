@@ -1,0 +1,36 @@
+@import "../../assets/index.scss";
+
+.roles {
+  .content-center {
+    display: block;
+    padding: 20px;
+  }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .search {
+      width: 320px;
+    }
+  }
+
+  .list {
+    background-color: #ffffff;
+  }
+}
+
+.roles-info-edit {
+  li {
+    display: flex;
+    margin-top: 16px;
+    .name {
+      width: 30%;
+      text-align: right;
+      margin-right: 16px;
+    }
+    .name-value {
+      width: 40%;
+    }
+  }
+}

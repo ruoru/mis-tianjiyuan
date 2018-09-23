@@ -8,6 +8,7 @@ import Navigation from '../../components/Navigation';
 
 import Users from '../Users';
 import Roles from '../Roles';
+import DataSet from '../DataSet';
 
 import gateway from '../../utils/getGateway';
 import navigations from '../../../config/navigations.json';
@@ -85,6 +86,8 @@ class App extends Component {
             <Route path="/users" component={Users} />
             <Route path="/roles/:id" component={Roles} />
             <Route path="/roles" component={Roles} />
+            <Route path="/dataset/:id" component={DataSet} />
+            <Route path="/dataset" component={DataSet} />
           </Switch>
         </Layout>
       </Layout>
