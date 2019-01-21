@@ -6,17 +6,17 @@ class Gateway {
     this.jsonRequest = this.jsonRequest;
   }
 
-  async formRequest(method, path, filter = {}, notWithAuth) {
+  async formRequest(method, path, filter = {}, withoutAuth) {
     method = method.toUpperCase();
     const url = this.generateRequestURL(method, path, filter);
-    const options = this.generateRequestOptions(method, filter, 'form', notWithAuth);
+    const options = this.generateRequestOptions(method, filter, 'form', withoutAuth);
     return await this.requestAndResponse(url, options);
   }
 
-  async jsonRequest(method, path, filter = {}, notWithAuth) {
+  async jsonRequest(method, path, filter = {}, withoutAuth) {
     method = method.toUpperCase();
     const url = this.generateRequestURL(method, path, filter);
-    const options = this.generateRequestOptions(method, filter, 'json', notWithAuth);
+    const options = this.generateRequestOptions(method, filter, 'json', withoutAuth);
     return await this.requestAndResponse(url, options);
   }
 
@@ -36,7 +36,7 @@ class Gateway {
     return obj;
   }
 
-  generateRequestOptions(method = 'GET', filter = {}, requestDataType, notWithAuth) {
+  generateRequestOptions(method = 'GET', filter = {}, requestDataType, withoutAuth) {
     const options = {
       method,
       headers: {
@@ -46,7 +46,7 @@ class Gateway {
       mode: 'cors',
     };
 
-    if (!notWithAuth) {
+    if (!withoutAuth) {
       const { jwToken } = this.getAuthInfo();
       // personal jwt
       if (!jwToken) {
